@@ -1,20 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
-import Book, { bookType } from "./components/Book";
+import Book from "./components/Book";
 import Input from "./components/Input";
 import Loading from "./components/Loading";
 import SortBy from "./components/SortBy";
-import { query, Result, Doc } from "./api";
-
-const book: bookType = {
-  title: "how to be awesome",
-  author: "matt graham",
-  published_year: 2024,
-  isbn: "abc123",
-  pages: 123,
-}
-
-const books: bookType[] = [book];
+import { query, Doc } from "./api";
 
 const App = () => {
   const [recentChange, setRecentChange] = useState<boolean>(false);

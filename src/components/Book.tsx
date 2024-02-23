@@ -1,5 +1,3 @@
-import React from "react";
-
 import { Doc } from "../api";
 
 export interface bookType {
@@ -16,7 +14,7 @@ interface Props {
 
 const renderList = (s: string | string[] | undefined): string => {
     if (!s) return ""; 
-    
+
     if (typeof(s) === "string") return s;
 
     return s.join(", ");
@@ -31,7 +29,6 @@ const renderISBN = (s: string | string[] | undefined): string => {
 }
 
 const Book = ({ book }: Props) => {
-    const key = book.isbn ? book.isbn : "asldkfjasldkfj";
     return (
         <div className="px-2 mx-2 my-2 bg-indigo-50 border border-indigo-200 rounded-xl flex flex-col items-center w-full max-w-md">
             <div className="text-2xl font-bold tracking-tight text-slate-900">{book.title}</div>

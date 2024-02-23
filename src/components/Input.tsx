@@ -1,6 +1,3 @@
-import React, { useState, useEffect } from "react";
-import { query } from "../api";
-
 interface Props {
     value: string,
     onChange: (e: any) => void,
