@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Book from "./components/Book";
 import Input from "./components/Input";
@@ -7,7 +7,6 @@ import SortBy from "./components/SortBy";
 import { query, Doc } from "./api";
 
 const App = () => {
-  const [recentChange, setRecentChange] = useState<boolean>(false);
   const [results, setResults] = useState<Doc[]>([]);
   const [sortedResults, setSortedResults] = useState<Doc[]>([]);
   const [queryString, setQueryString] = useState<string>("");
@@ -16,24 +15,23 @@ const App = () => {
 
   const onChange = (e: any) => {
     setQueryString(e.target.value);
-    setRecentChange(true);
-    setTimeout(() => {
-      if (recentChange) return;
+  }
 
-      console.log("triggering api call");
-      setLoading(true);
-      query(e.target.value)
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+        setLoading(true);
+        query(queryString)
         .then((d) => {
           setResults(d.docs);
           setSortedResults([...d.docs].sort((a, b) => a.first_publish_year - b.first_publish_year));
-          })
+        })
         .finally(() => {
-          setRecentChange(false);
           setLoading(false);
           console.log(results);
         })
-    }, 1000)
-  }
+    }, 1000);
+    return () => clearTimeout(timeout);
+  }, [queryString])
 
   const onSelectChange = (e: any) => {
     setSortBy(e.target.value);
